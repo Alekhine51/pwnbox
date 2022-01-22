@@ -1,0 +1,18 @@
+FROM kalilinux/kali-rolling
+
+
+# base tools
+RUN apt update && apt upgrade
+RUN apt install -y kali-linux-headless
+#top 10 tools
+RUN apt install -y kali-tools-top10
+
+RUN apt install -y socat neovim inetutils-ping gpg man fish exa bat
+RUN apt clean
+
+
+# set fish as default shell
+RUN cat /usr/bin/fish >> /etc/shells
+RUN chsh -s /usr/bin/fish
+
+#TODO import dotfiles
