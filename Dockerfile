@@ -42,11 +42,30 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists*
 
 WORKDIR /tools
+#enum4linux-ng
 RUN git clone https://github.com/cddmp/enum4linux-ng.git /tools/enum4linux-ng \
     && ln -s /tools/enum4linux-ng/enum4linux-ng.py /usr/local/bin/enum4linux-ng
 
 # set fish as default shell
 RUN cat /usr/bin/fish >> /etc/shells
 RUN chsh -s /usr/bin/fish
+ENTRYPOINT ["/usr/bin/fish"]
 
 # Set Aliases
+
+FROM base AS wordlists
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Install Seclists
+RUN mkdir -p /usr/share/seclists \
+    # The apt-get install seclists command isn't installing the wordlists, so clone the repo.
+    && git clone --depth 1 https://github.com/danielmiessler/SecLists.git /usr/share/seclists
+
+# Prepare rockyou wordlist
+RUN mkdir -p /usr/share/wordlists
+WORKDIR /usr/share/wordlists
+RUN cp /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz /usr/share/wordlists/ \
+    && tar -xzf rockyou.txt.tar.gz
+
+WORKDIR /root
