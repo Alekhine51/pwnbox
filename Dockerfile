@@ -47,11 +47,16 @@ RUN git clone https://github.com/cddmp/enum4linux-ng.git /tools/enum4linux-ng \
     && ln -s /tools/enum4linux-ng/enum4linux-ng.py /usr/local/bin/enum4linux-ng
 
 # set fish as default shell
-RUN cat /usr/bin/fish >> /etc/shells
+RUN echo "/usr/bin/fish" >> /etc/shells
 RUN chsh -s /usr/bin/fish
 ENTRYPOINT ["/usr/bin/fish"]
 
+# the rest of the commands in this file will be run in fish
+SHELL ["/usr/bin/fish", "-c"]
+
 # Set Aliases
+RUN alias -s ls=exa
+RUN alias -s cat=bat
 
 FROM base AS wordlists
 
@@ -67,5 +72,7 @@ RUN mkdir -p /usr/share/wordlists
 WORKDIR /usr/share/wordlists
 RUN cp /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz /usr/share/wordlists/ \
     && tar -xzf rockyou.txt.tar.gz
+
+RUN apt-get update && apt-get upgrade
 
 WORKDIR /root
