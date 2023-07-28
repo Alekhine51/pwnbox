@@ -52,8 +52,8 @@ RUN chsh -s /usr/bin/fish
 ENTRYPOINT ["/usr/bin/fish"]
 
 # Set Aliases
-RUN /usr/bin/fish "alias -s ls=exa"
-RUN /usr/bin/fish "alias -s cat=bat"
+#RUN /usr/bin/fish "alias -s ls=exa"
+#RUN /usr/bin/fish "alias -s cat=bat"
 
 FROM base AS wordlists
 
