@@ -63,12 +63,11 @@ FROM base AS wordlists
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install Seclists
-RUN mkdir -p /usr/share/seclists \
+RUN mkdir -p /usr/share/wordlists/seclists \
     # The apt-get install seclists command isn't installing the wordlists, so clone the repo.
-    && git clone --depth 1 https://github.com/danielmiessler/SecLists.git /usr/share/seclists
+    && git clone --depth 1 https://github.com/danielmiessler/SecLists.git /usr/share/wordlists/seclists
 
 # Prepare rockyou wordlist
-RUN mkdir -p /usr/share/wordlists
 WORKDIR /usr/share/wordlists
 RUN cp /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz /usr/share/wordlists/ \
     && tar -xzf rockyou.txt.tar.gz
