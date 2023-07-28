@@ -7,7 +7,7 @@ RUN apt-get update \
     dotdotpwn file finger ffuf gobuster git hydra impacket-scripts john less locate \
     lsof man-db netcat-traditional nikto nmap proxychains4 python3 python3-pip python3-setuptools \
     python3-wheel smbclient smbmap socat ssh-client sslscan sqlmap telnet tmux unzip whatweb neovim zip \
-    fish exa bat \
+    fish exa bat kali-tools-top10 \
     # Slim down layer size
     && apt-get autoremove -y \
     && apt-get autoclean -y \
@@ -51,12 +51,9 @@ RUN echo "/usr/bin/fish" >> /etc/shells
 RUN chsh -s /usr/bin/fish
 ENTRYPOINT ["/usr/bin/fish"]
 
-# the rest of the commands in this file will be run in fish
-SHELL ["/usr/bin/fish", "-c"]
-
 # Set Aliases
-RUN alias -s ls=exa
-RUN alias -s cat=bat
+RUN /usr/bin/fish alias -s ls=exa
+RUN /usr/bin/fish alias -s cat=bat
 
 FROM base AS wordlists
 
