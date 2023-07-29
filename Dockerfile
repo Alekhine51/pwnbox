@@ -66,8 +66,8 @@ RUN mkdir -p /usr/share/wordlists/seclists \
 
 # Prepare rockyou wordlist
 WORKDIR /usr/share/wordlists
-RUN cp /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz /usr/share/wordlists/ \
-    && tar -xzf rockyou.txt.tar.gz
+RUN cp /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz /usr/share/wordlists/
+Run tar -xzf rockyou.txt.tar.gz
 
 RUN apt-get update && apt-get upgrade
 
