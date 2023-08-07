@@ -1,5 +1,6 @@
 FROM kalilinux/kali-rolling:latest AS base
 
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends apt-utils \
@@ -56,8 +57,6 @@ ENTRYPOINT ["/usr/bin/fish"]
 #RUN /usr/bin/fish "alias -s cat=bat"
 
 FROM base AS wordlists
-
-ARG DEBIAN_FRONTEND=noninteractive
 
 # Install Seclists
 RUN mkdir -p /usr/share/wordlists/seclists \
